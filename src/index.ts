@@ -7,33 +7,62 @@ type Task = {
   createdAt: Date;
 };
 
+const list = document.getElementById('list') as HTMLUListElement;
+const form = document.getElementById('new-task-form') as HTMLFormElement;
+const input = document.getElementById('new-task-title') as HTMLInputElement;
+const deleteAll = document.getElementById('deleteTasks') as HTMLButtonElement;
+
 const loadTasks = (): Task[] => {
   const tasksJSON = localStorage.getItem('TASKS');
   if (!tasksJSON) return [];
   return JSON.parse(tasksJSON);
 };
 
-const addListItem = (task: Task) => {
-  const item = document.createElement('li');
-  const label = document.createElement('label');
-  const checkbox = document.createElement('input');
-  checkbox.addEventListener('change', () => {
-    task.completed = checkbox.checked;
-    saveTasks();
+const refreshTaskInfo = () => {
+  list.innerHTML = '';
+  tasks.forEach((taskInfo, i) => {
+    const deleteTask = document.createElement('button');
+    deleteTask.classList.add('deleteTask');
+    deleteTask.innerHTML = '<i class="fa-solid fa-trash-can fa-lg"></i>';
+    deleteTask.title = 'Delete task';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.title = 'Task done';
+
+    const span = document.createElement('span');
+    span.textContent = taskInfo.title;
+    const li = document.createElement('li');
+    if (taskInfo.completed) {
+      checkbox.checked = true;
+      span.classList.add('done');
+    }
+
+    // Listeners
+    deleteTask.addEventListener('click', () => {
+      tasks.splice(i, 1);
+      saveTasks(tasks);
+      refreshTaskInfo();
+    });
+
+    checkbox.addEventListener('click', (event: Event) => {
+      const target = event.target as HTMLInputElement;
+      if (target.checked) {
+        tasks[i].completed = true;
+      } else {
+        tasks[i].completed = false;
+      }
+      saveTasks(tasks);
+      refreshTaskInfo();
+    });
+    // Append to DOM
+    li.appendChild(span).classList.add('textTask');
+    li.appendChild(checkbox).classList.add('taskDone');
+    li.appendChild(deleteTask);
+    list.appendChild(li).classList.add('listTask');
+    saveTasks(tasks);
   });
-  checkbox.type = 'checkbox';
-  checkbox.checked = task.completed;
-  label.append(checkbox, task.title);
-  item.append(label);
-  list.append(item);
 };
-
-const list = document.getElementById('list') as HTMLUListElement;
-const form = document.getElementById('new-task-form') as HTMLFormElement;
-const input = document.getElementById('new-task-title') as HTMLInputElement;
-
-const tasks: Task[] = loadTasks();
-tasks.forEach(addListItem);
 
 form?.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -46,11 +75,21 @@ form?.addEventListener('submit', (e) => {
     createdAt: new Date(),
   };
   tasks.push(newTask);
-  addListItem(newTask);
+  refreshTaskInfo();
   input.value = '';
-  saveTasks();
 });
 
-const saveTasks = () => {
+const saveTasks = (tasks: Task[]) => {
   localStorage.setItem('TASKS', JSON.stringify(tasks));
 };
+
+// Detele All Tasks
+
+deleteAll.addEventListener('click', () => {
+  if (!tasks.length) return;
+  tasks = [];
+  saveTasks(tasks);
+  refreshTaskInfo();
+});
+let tasks: Task[] = loadTasks();
+refreshTaskInfo();
