@@ -7,23 +7,17 @@
   font-weight: 500;
   font-size: 18px;
 }
+
 input {
   color: #000;
+  font-weight: bolder;
+  text-indent: 10px;
 }
+
 #list {
   list-style: none;
   padding: 0;
   width: 100%;
-}
-
-body {
-  margin: 0;
-  height: 90vh;
-  background: radial-gradient(#640f75, #1f1013);
-  -webkit-animation: fadeIn 1 1s ease-out;
-  -moz-animation: fadeIn 1 1s ease-out;
-  -o-animation: fadeIn 1 1s ease-out;
-  animation: fadeIn 1 1s ease-out;
 }
 .formContainer {
   display: flex;
@@ -39,6 +33,9 @@ form {
   display: flex;
   justify-content: center;
   gap: 10px;
+  border-bottom: 2px solid black;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
 }
 button {
   background-color: fuchsia;
@@ -55,11 +52,108 @@ button:hover {
 input::placeholder {
   text-indent: 10px;
 }
+.taskDone {
+  width: 20px;
+  height: 20px;
+  margin: auto;
+}
+.textTask {
+  color: white;
+  overflow: hidden;
+  padding: 5px;
+  font-size: large;
+  width: 320px;
+}
+.deleteTask:hover {
+  color: white;
+  background-color: black;
+  transform: rotate(360deg);
+  transition: 0.5s;
+}
+@keyframes tachar {
+  from {
+    text-decoration-color: transparent;
+  }
+  to {
+    text-decoration-color: rgb(192, 183, 183);
+  }
+}
+.done {
+  text-decoration: line-through;
+  animation: tachar 0.3s linear;
+  text-decoration-color: rgba(255, 255, 255, 0.8);
+  text-decoration-thickness: 2px;
+  color: rgba(255, 255, 255, 0.5);
+}
+.deleteTask {
+  width: 25px;
+  height: 25px;
+  position: relative;
+}
+i {
+  position: absolute;
+  left: 6.5px;
+}
+input[type='checkbox'] {
+  position: relative;
+  cursor: pointer;
+}
+input[type='checkbox']:before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 0;
+  left: 0;
+  border: 2px solid #67ac1800;
+  border-radius: 3px;
+  background-color: rgb(153, 22, 185);
+}
+input[type='checkbox']:checked:after {
+  content: '';
+  display: block;
+  width: 5px;
+  height: 10px;
+  border: solid rgb(255, 255, 255);
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  position: absolute;
+  top: 2px;
+  left: 6px;
+}
+.actionContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.listTask {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid rgb(255, 255, 255, 0.127);
+}
 h1 {
   font-size: 23px;
   text-align: center;
   margin: 10px 0;
 }
+
+/* Background */
+
+body {
+  margin: 0;
+  height: 90vh;
+  background: radial-gradient(#640f75, #1f1013);
+  -webkit-animation: fadeIn 1 1s ease-out;
+  -moz-animation: fadeIn 1 1s ease-out;
+  -o-animation: fadeIn 1 1s ease-out;
+  animation: fadeIn 1 1s ease-out;
+}
+
 .light {
   position: absolute;
   width: 0px;

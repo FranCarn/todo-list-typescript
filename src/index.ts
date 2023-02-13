@@ -23,9 +23,9 @@ const refreshTaskInfo = () => {
   tasks.forEach((taskInfo, i) => {
     const deleteTask = document.createElement('button');
     deleteTask.classList.add('deleteTask');
-    deleteTask.innerHTML = '<i class="fa-solid fa-trash-can fa-lg"></i>';
+    deleteTask.innerHTML = '<i class="fa-solid fa-trash-can fa-xs"></i>';
     deleteTask.title = 'Delete task';
-
+    const div = document.createElement('div');
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.title = 'Task done';
@@ -37,7 +37,6 @@ const refreshTaskInfo = () => {
       checkbox.checked = true;
       span.classList.add('done');
     }
-
     // Listeners
     deleteTask.addEventListener('click', () => {
       tasks.splice(i, 1);
@@ -57,8 +56,10 @@ const refreshTaskInfo = () => {
     });
     // Append to DOM
     li.appendChild(span).classList.add('textTask');
-    li.appendChild(checkbox).classList.add('taskDone');
-    li.appendChild(deleteTask);
+    li.appendChild(div);
+    div.appendChild(checkbox).classList.add('taskDone');
+    div.appendChild(deleteTask);
+    div.classList.add('actionContainer');
     list.appendChild(li).classList.add('listTask');
     saveTasks(tasks);
   });
