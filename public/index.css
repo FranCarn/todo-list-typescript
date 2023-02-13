@@ -35,7 +35,31 @@ body {
   border-radius: 15px;
   padding: 10px;
 }
-
+form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+button {
+  background-color: fuchsia;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+}
+button:hover {
+  color: black;
+  scale: 1.1;
+  cursor: pointer;
+  font-weight: bold;
+}
+input::placeholder {
+  text-indent: 10px;
+}
+h1 {
+  font-size: 23px;
+  text-align: center;
+  margin: 10px 0;
+}
 .light {
   position: absolute;
   width: 0px;
