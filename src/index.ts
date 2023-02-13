@@ -48,6 +48,7 @@ form?.addEventListener('submit', (e) => {
   tasks.push(newTask);
   addListItem(newTask);
   input.value = '';
+  saveTasks();
 });
 
 const saveTasks = () => {
